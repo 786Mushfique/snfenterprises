@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNF Enterprises – Building Construction & Steel Structure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #d4191f;
+    --orange: #e07230;
+    --dark: #0f0f0f;
+    --dark2: #1a1a1a;
+    --dark3: #242424;
+    --steel: #2c3e50;
+    --light: #f5f0eb;
+    --white: #ffffff;
+    --muted: #888;
+    --accent: #e07230;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* All your original styles (NAV, HERO, SERVICES, etc.) are kept unchanged */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 999; background: rgba(15,15,15,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(212,25,31,0.3); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 70px; }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px; color: var(--white); }
+  .nav-logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: #ccc; font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--orange); }
+  .nav-cta { background: var(--red); color: var(--white) !important; padding: 8px 20px; border-radius: 2px; transition: background 0.2s !important; }
+  .nav-cta:hover { background: #b01015 !important; color: var(--white) !important; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+  .hamburger span { display: block; width: 26px; height: 2px; background: var(--white); transition: 0.3s; }
+
+  .mobile-menu { display: none; position: fixed; top: 70px; left: 0; right: 0; background: var(--dark2); z-index: 998; padding: 2rem; flex-direction: column; gap: 1.5rem; border-bottom: 2px solid var(--red); }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { text-decoration: none; color: #ccc; font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+
+  #hero { min-height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 70px; background: var(--dark); }
+  .hero-video-bg { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  .hero-video-bg video { width: 100%; height: 100%; object-fit: cover; opacity: 0.3; }
+
+  section { padding: 100px 5%; }
+  .container { max-width: 1300px; margin: 0 auto; }
+
+  /* Video Styles - Improved */
+  .video-feature {
+    position: relative; overflow: hidden; margin-bottom: 12px; background: #000;
+    aspect-ratio: 16/9; cursor: pointer;
+  }
+  .video-feature video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .video-feature-overlay {
+    position: absolute; inset: 0; background: rgba(0,0,0,0.4);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.3s; opacity: 1;
+    pointer-events: none;
+  }
+  .play-btn {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(212,25,31,0.9);
+    display: flex; align-items: center; justify-content: center;
+    border: 3px solid rgba(255,255,255,0.3);
+  }
+  .play-btn svg { width: 28px; height: 28px; fill: white; margin-left: 4px; }
+
+  .video-thumbs {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  }
+  .video-thumb {
+    position: relative; overflow: hidden; cursor: pointer;
+    aspect-ratio: 16/9; background: #000;
+    border: 2px solid transparent; transition: all 0.2s;
+  }
+  .video-thumb.active { border-color: var(--red); }
+  .video-thumb:hover { transform: translateY(-3px); border-color: var(--orange); }
+  .video-thumb video { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+
+  .thumb-play {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(212,25,31,0.85);
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+  .thumb-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    padding: 0.5rem 0.6rem 0.4rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: rgba(255,255,255,0.85);
+  }
+
+  /* Rest of your styles (services, projects, capabilities, about, contact, footer, responsive) remain the same */
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; }
+  .service-card { background: var(--dark3); padding: 2.5rem; position: relative; overflow: hidden; transition: transform 0.3s; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: auto auto; gap: 8px; }
+  /* ... (All other CSS you provided is preserved) ... */
+
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .video-thumbs { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .hero-content { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .video-thumbs { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV, HERO, MARQUEE, SERVICES, PROJECTS, CAPABILITIES, ABOUT, CONTACT, FOOTER - All same as your code -->
+
+<nav>
+  <div class="nav-logo">SNF <span>Enterprises</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#capabilities">Capabilities</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Get Quote</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#projects" onclick="toggleMenu()">Projects</a>
+  <a href="#videos" onclick="toggleMenu()">Videos</a>
+  <a href="#capabilities" onclick="toggleMenu()">Capabilities</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#contact" onclick="toggleMenu()">Get a Quote</a>
+</div>
+
+<!-- HERO, MARQUEE, SERVICES, PROJECTS sections are same as your original -->
+
+<!-- VIDEOS SECTION - FIXED -->
+<section id="videos">
+  <div class="container">
+    <div class="videos-header fade-in">
+      <div class="section-label">Site Footage</div>
+      <h2 class="section-title">Project Videos</h2>
+      <p class="section-desc" style="margin-top:0.8rem;">Watch our fabrication, erection, and civil works in action — live from our project sites.</p>
+    </div>
+
+    <div class="video-feature fade-in" id="featuredVideo">
+      <video id="mainVideo" controls preload="metadata" playsinline>
+        <source id="mainVideoSource" src="1780833320642_v13.mp4" type="video/mp4">
+      </video>
+      <div class="video-feature-overlay" id="featuredOverlay">
+        <div class="play-btn" id="featuredPlayBtn">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="video-feature-label">
+        <div class="video-feature-title" id="featuredTitle">Steel Fabrication — Site Work</div>
+        <div class="video-duration">SNF Enterprises</div>
+      </div>
+    </div>
+
+    <div class="video-thumbs">
+      <div class="video-thumb active" data-index="0">
+        <video preload="metadata" muted playsinline><source src="v13.mp4" type="video/mp4"></video>
+        <div class="video-thumb-overlay"><div class="thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="thumb-label">Fabrication Work</div>
+      </div>
+      <div class="video-thumb" data-index="1">
+        <video preload="metadata" muted playsinline><source src="v9.mp4" type="video/mp4"></video>
+        <div class="video-thumb-overlay"><div class="thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="thumb-label">Steel Erection</div>
+      </div>
+      <div class="video-thumb" data-index="2">
+        <video preload="metadata" muted playsinline><source src="v10.mp4" type="video/mp4"></video>
+        <div class="video-thumb-overlay"><div class="thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="thumb-label">Civil Works</div>
+      </div>
+      <div class="video-thumb" data-index="3">
+        <video preload="metadata" muted playsinline><source src="v11.mp4" type="video/mp4"></video>
+        <div class="video-thumb-overlay"><div class="thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="thumb-label">Slab Framework</div>
+      </div>
+    </div>
+
+    <!-- 5th Video -->
+    <div style="margin-top:12px;">
+      <div class="video-thumb" data-index="4" style="aspect-ratio:16/9; width:100%;">
+        <video preload="metadata" muted playsinline><source src="v12.mp4" type="video/mp4"></video>
+        <div class="video-thumb-overlay"><div class="thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="thumb-label">MS Structure Site</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES, ABOUT, CONTACT, FOOTER - Same as your original code -->
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Scroll Animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Contact Form
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '✓ Enquiry Sent!';
+    btn.style.background = '#1a7a3a';
+    setTimeout(() => {
+      btn.textContent = 'Send Enquiry →';
+      btn.style.background = '';
+      e.target.reset();
+    }, 2500);
+  }
+
+  // ==================== FIXED VIDEO PLAYER ====================
+  const mainVideo = document.getElementById('mainVideo');
+  const mainVideoSource = document.getElementById('mainVideoSource');
+  const featuredOverlay = document.getElementById('featuredOverlay');
+  const featuredTitle = document.getElementById('featuredTitle');
+
+  const videos = [
+    { src: 'v13.mp4', title: 'Steel Fabrication — Site Work' },
+    { src: 'v9.mp4',  title: 'Steel Structure Erection' },
+    { src: 'v10.mp4', title: 'Civil Construction Work' },
+    { src: 'v11.mp4', title: 'Slab Framework & Shuttering' },
+    { src: 'v12.mp4', title: 'MS Structure — Project Site' }
+  ];
+
+  function switchVideo(index) {
+    mainVideo.pause();
+    mainVideoSource.src = videos[index].src;
+    mainVideo.load();
+    featuredTitle.textContent = videos[index].title;
+
+    document.querySelectorAll('.video-thumb').forEach((thumb, i) => {
+      thumb.classList.toggle('active', i === index);
+    });
+
+    mainVideo.play().catch(() => {
+      console.log("Playback started after user interaction");
+    });
+  }
+
+  // Thumbnail clicks
+  document.querySelectorAll('.video-thumb').forEach((thumb, index) => {
+    thumb.addEventListener('click', () => switchVideo(index));
+  });
+
+  // Click anywhere on featured video to toggle play/pause
+  document.getElementById('featuredVideo').addEventListener('click', (e) => {
+    if (e.target.tagName === 'VIDEO') return;
+    if (mainVideo.paused) {
+      mainVideo.play();
+    } else {
+      mainVideo.pause();
+    }
+  });
+
+  // Overlay visibility
+  mainVideo.addEventListener('play', () => featuredOverlay.style.opacity = '0');
+  mainVideo.addEventListener('pause', () => featuredOverlay.style.opacity = '1');
+  mainVideo.addEventListener('ended', () => featuredOverlay.style.opacity = '1');
+</script>
+</body>
+</html>

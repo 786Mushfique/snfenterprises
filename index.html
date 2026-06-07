@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNF Enterprises – Building Construction & Steel Structure</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #d4191f;
+    --orange: #e07230;
+    --dark: #0f0f0f;
+    --dark2: #1a1a1a;
+    --dark3: #242424;
+    --steel: #2c3e50;
+    --light: #f5f0eb;
+    --white: #ffffff;
+    --muted: #888;
+    --accent: #e07230;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--dark);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+    background: rgba(15,15,15,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212,25,31,0.3);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 70px;
+  }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px; color: var(--white); }
+  .nav-logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: #ccc;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--orange); }
+  .nav-cta { background: var(--red); color: var(--white) !important; padding: 8px 20px; border-radius: 2px; transition: background 0.2s !important; }
+  .nav-cta:hover { background: #b01015 !important; color: var(--white) !important; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+  .hamburger span { display: block; width: 26px; height: 2px; background: var(--white); transition: 0.3s; }
+  .mobile-menu {
+    display: none; position: fixed; top: 70px; left: 0; right: 0;
+    background: var(--dark2); z-index: 998;
+    padding: 2rem; flex-direction: column; gap: 1.5rem;
+    border-bottom: 2px solid var(--red);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { text-decoration: none; color: #ccc; font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+  .mobile-menu a:hover { color: var(--orange); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    padding-top: 70px;
+    background: var(--dark);
+  }
+  .hero-video-bg {
+    position: absolute; inset: 0; z-index: 0;
+    overflow: hidden;
+  }
+  .hero-video-bg video {
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0.3;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(135deg, rgba(212,25,31,0.15) 0%, transparent 50%),
+      linear-gradient(to bottom, rgba(15,15,15,0.3) 0%, rgba(15,15,15,0.85) 100%);
+    z-index: 1;
+  }
+  .hero-grid-lines {
+    position: absolute; inset: 0; z-index: 1;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 5%;
+    max-width: 1400px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 40px; height: 2px; background: var(--red); }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 7vw, 6.5rem);
+    line-height: 0.92; letter-spacing: 1px; margin-bottom: 1.5rem;
+  }
+  .hero-title .line-accent { color: var(--orange); }
+  .hero-desc { font-size: 1.05rem; font-weight: 300; color: #aaa; line-height: 1.8; margin-bottom: 2.5rem; max-width: 480px; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--red); color: var(--white);
+    padding: 14px 32px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none; border: none; cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+    transition: background 0.2s, transform 0.2s; display: inline-block;
+  }
+  .btn-primary:hover { background: #b01015; transform: translateY(-2px); }
+  .btn-outline {
+    border: 1px solid rgba(255,255,255,0.2); color: var(--white);
+    padding: 14px 32px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s, transform 0.2s; display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem; padding-top: 3rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; color: var(--orange); line-height: 1; }
+  .stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-top: 4px; }
+  .hero-visual { position: relative; }
+  .hero-photo-grid {
+    display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto;
+    gap: 8px; position: relative;
+  }
+  .hero-photo-grid img { width: 100%; object-fit: cover; display: block; }
+  .hero-photo-grid .photo-main { grid-column: 1 / 3; height: 280px; }
+  .hero-photo-grid .photo-sm { height: 180px; }
+  .hero-badge {
+    position: absolute; bottom: -20px; right: -20px;
+    background: var(--red); padding: 20px;
+    text-align: center; z-index: 10;
+  }
+  .hero-badge-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 1px; line-height: 1.3; }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 100px 5%; }
+  .container { max-width: 1300px; margin: 0 auto; }
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; font-weight: 700; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::before { content: ''; display: block; width: 30px; height: 2px; background: var(--red); }
+  .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1; margin-bottom: 1.5rem; }
+  .section-desc { font-size: 1rem; font-weight: 300; color: #999; line-height: 1.8; max-width: 600px; }
+
+  /* ─── SERVICES ─── */
+  #services { background: var(--dark2); }
+  .services-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; gap: 2rem; flex-wrap: wrap; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5px; }
+  .service-card {
+    background: var(--dark3); padding: 2.5rem;
+    position: relative; overflow: hidden; transition: transform 0.3s; cursor: default;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 0; background: var(--orange); transition: height 0.4s;
+  }
+  .service-card:hover::before { height: 100%; }
+  .service-card:hover { transform: translateY(-4px); }
+  .service-icon { font-size: 2.5rem; margin-bottom: 1.2rem; }
+  .service-name { font-family: 'Barlow Condensed', sans-serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--white); margin-bottom: 0.8rem; }
+  .service-desc { font-size: 0.9rem; color: #888; line-height: 1.7; }
+  .service-tag { display: inline-block; background: rgba(212,25,31,0.15); color: var(--red); font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; margin-top: 1.2rem; }
+
+  /* ─── PROJECTS ─── */
+  #projects { background: var(--dark); }
+  .projects-header { margin-bottom: 3rem; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: auto auto; gap: 8px; }
+  .gallery-item { position: relative; overflow: hidden; cursor: pointer; min-height: 200px; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; min-height: inherit; }
+  .gallery-item:hover img { transform: scale(1.06); }
+  .gallery-item.tall { grid-row: span 2; min-height: 408px; }
+  .gallery-item.wide { grid-column: span 2; }
+  .gallery-item .overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(15,15,15,0.85) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 1.5rem;
+  }
+  .gallery-item:hover .overlay { opacity: 1; }
+  .overlay-text { font-family: 'Barlow Condensed', sans-serif; font-size: 0.9rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--white); }
+
+  /* ─── VIDEO SECTION ─── */
+  #videos { background: var(--dark3); }
+  .videos-header { margin-bottom: 3rem; }
+
+  .video-feature {
+    position: relative; overflow: hidden;
+    margin-bottom: 12px; background: #000;
+    aspect-ratio: 16/9;
+    cursor: pointer;
+    user-select: none;
+  }
+  .video-feature video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+  }
+  .video-feature-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(15,15,15,0.7) 0%, transparent 50%);
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.3s;
+  }
+  .play-btn {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(212,25,31,0.9);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.3s, background 0.3s;
+    border: 3px solid rgba(255,255,255,0.3);
+    pointer-events: none;
+  }
+  .play-btn svg { width: 28px; height: 28px; fill: white; margin-left: 4px; }
+  .video-feature:hover .play-btn { transform: scale(1.1); background: var(--red); }
+  .video-feature-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    pointer-events: none;
+  }
+  .video-feature-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: #fff;
+  }
+  .video-duration {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem; color: rgba(255,255,255,0.6);
+    letter-spacing: 1px;
+  }
+
+  /* Thumbnail row */
+  .video-thumbs {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+  .video-thumb {
+    position: relative; overflow: hidden; cursor: pointer;
+    aspect-ratio: 16/9; background: #000;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .video-thumb.active { border-color: var(--red); }
+  .video-thumb:hover { transform: translateY(-3px); border-color: var(--orange); }
+  .video-thumb video {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    pointer-events: none;
+  }
+  .video-thumb-overlay {
+    position: absolute; inset: 0;
+    background: rgba(0,0,0,0.35);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    pointer-events: none;
+  }
+  .video-thumb.active .video-thumb-overlay,
+  .video-thumb:hover .video-thumb-overlay { background: rgba(0,0,0,0.15); }
+  .thumb-play {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(212,25,31,0.85);
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid rgba(255,255,255,0.3);
+  }
+  .thumb-play svg { width: 14px; height: 14px; fill: white; margin-left: 2px; }
+  .thumb-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+    padding: 0.5rem 0.6rem 0.4rem;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; color: rgba(255,255,255,0.85);
+    line-height: 1.3;
+  }
+
+  /* ─── CAPABILITIES ─── */
+  #capabilities { background: var(--dark2); }
+  .caps-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .caps-list { list-style: none; margin-top: 2rem; }
+  .caps-list li { display: flex; align-items: flex-start; gap: 1.2rem; padding: 1.2rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .caps-list li:last-child { border-bottom: none; }
+  .cap-num { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--red); opacity: 0.5; line-height: 1; min-width: 40px; }
+  .cap-title { font-family: 'Barlow Condensed', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--white); margin-bottom: 4px; }
+  .cap-desc { font-size: 0.88rem; color: #777; line-height: 1.6; }
+  .materials-panel { background: var(--dark3); padding: 2.5rem; position: relative; overflow: hidden; }
+  .materials-panel::after { content: 'STEEL'; font-family: 'Bebas Neue', sans-serif; font-size: 10rem; color: rgba(255,255,255,0.02); position: absolute; bottom: -20px; right: -10px; line-height: 1; pointer-events: none; }
+  .mat-item { border-left: 2px solid var(--orange); padding: 0.6rem 1rem; margin-bottom: 1rem; }
+  .mat-item strong { display: block; font-family: 'Barlow Condensed', sans-serif; font-size: 0.95rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--white); margin-bottom: 3px; }
+  .mat-item span { font-size: 0.85rem; color: #777; }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--dark); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .about-card-img { position: relative; }
+  .about-card-img img { width: 100%; display: block; object-fit: cover; height: 500px; }
+  .about-card-img::before { content: ''; position: absolute; top: -12px; left: -12px; right: 12px; bottom: 12px; border: 2px solid var(--red); z-index: -1; }
+  .about-highlight { background: var(--dark3); padding: 1.5rem; margin-top: 2rem; border-left: 3px solid var(--orange); }
+  .about-highlight p { font-size: 0.95rem; color: #bbb; line-height: 1.7; }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 2rem; }
+  .tag { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 6px 14px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #999; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--dark2); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .contact-info-item { display: flex; align-items: flex-start; gap: 1.2rem; margin-bottom: 2rem; }
+  .contact-icon { font-size: 1.4rem; margin-top: 2px; min-width: 36px; }
+  .contact-label { font-family: 'Barlow Condensed', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--red); margin-bottom: 4px; }
+  .contact-value { font-size: 1rem; color: var(--white); }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-input { background: var(--dark3); border: 1px solid rgba(255,255,255,0.08); color: var(--white); padding: 14px 16px; font-family: 'Barlow', sans-serif; font-size: 0.9rem; width: 100%; transition: border-color 0.2s; outline: none; }
+  .form-input:focus { border-color: var(--orange); }
+  .form-input::placeholder { color: #555; }
+  textarea.form-input { resize: vertical; min-height: 130px; }
+  .form-submit { background: var(--red); color: var(--white); border: none; cursor: pointer; padding: 16px 36px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.95rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%); transition: background 0.2s; align-self: flex-start; }
+  .form-submit:hover { background: #b01015; }
+
+  /* ─── FOOTER ─── */
+  footer { background: #080808; padding: 3rem 5%; border-top: 1px solid rgba(255,255,255,0.05); }
+  .footer-inner { max-width: 1300px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px; }
+  .footer-logo span { color: var(--red); }
+  .footer-tagline { font-size: 0.8rem; color: #555; margin-top: 4px; letter-spacing: 2px; text-transform: uppercase; }
+  .footer-copy { font-size: 0.8rem; color: #444; }
+  .gstin-badge { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); padding: 8px 16px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; color: #666; letter-spacing: 1px; }
+
+  /* ─── MARQUEE ─── */
+  .marquee-strip { background: var(--red); padding: 14px 0; overflow: hidden; white-space: nowrap; }
+  .marquee-inner { display: inline-flex; gap: 0; animation: marquee 20s linear infinite; }
+  .marquee-item { font-family: 'Barlow Condensed', sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.85); padding: 0 3rem; border-right: 1px solid rgba(255,255,255,0.2); }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 1024px) {
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item.tall { grid-row: span 1; min-height: 200px; }
+    .gallery-item.wide { grid-column: span 1; }
+    .caps-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .video-thumbs { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 0 4%; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    section { padding: 70px 4%; }
+    .hero-content { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-visual { order: -1; }
+    .hero-photo-grid .photo-main { height: 200px; }
+    .hero-photo-grid .photo-sm { height: 130px; }
+    .hero-badge { right: 0; bottom: -10px; }
+    .hero-stats { gap: 1.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .form-row { grid-template-columns: 1fr; }
+    .services-header { flex-direction: column; align-items: flex-start; }
+    .footer-inner { flex-direction: column; align-items: flex-start; }
+    .about-card-img img { height: 300px; }
+    .about-card-img::before { display: none; }
+    .play-btn { width: 54px; height: 54px; }
+    .play-btn svg { width: 22px; height: 22px; }
+  }
+
+  @media (max-width: 600px) {
+    .video-thumbs { grid-template-columns: repeat(2, 1fr); }
+    .video-feature-title { font-size: 0.85rem; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-btns { flex-direction: column; }
+    .btn-primary, .btn-outline { text-align: center; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .video-thumbs { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">SNF <span>Enterprises</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#videos">Videos</a></li>
+    <li><a href="#capabilities">Capabilities</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Get Quote</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#projects" onclick="toggleMenu()">Projects</a>
+  <a href="#videos" onclick="toggleMenu()">Videos</a>
+  <a href="#capabilities" onclick="toggleMenu()">Capabilities</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#contact" onclick="toggleMenu()">Get a Quote</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-video-bg">
+    <video autoplay muted loop playsinline>
+      <source src="v9.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <div>
+      <div class="hero-eyebrow">Noida, U.P. · Est. Since 2024</div>
+      <h1 class="hero-title">
+        Building<br>
+        <span class="line-accent">Steel.</span><br>
+        Structures.
+      </h1>
+      <p class="hero-desc">SNF Enterprises delivers end-to-end civil construction and structural steel solutions — from MS fabrication &amp; erection to fire fighting systems, slab work, and industrial frameworks.</p>
+      <div class="hero-btns">
+        <a href="#contact" class="btn-primary">Get a Free Quote</a>
+        <a href="#videos" class="btn-outline">▶ Watch Our Work</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">100+</div>
+          <div class="stat-label">Projects Done</div>
+        </div>
+        <div>
+          <div class="stat-num">5+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div>
+          <div class="stat-num">GST</div>
+          <div class="stat-label">Registered Firm</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual fade-in">
+      <div class="hero-photo-grid">
+        <img src="s4.jpeg" alt="Steel structure project" class="photo-main">
+        <img src="s1.jpeg" alt="Construction work" class="photo-sm">
+        <img src="s2.jpeg" alt="Fabrication work" class="photo-sm">
+        <div class="hero-badge">
+          <div class="hero-badge-text">ALL TYPE OF<br>CIVIL &amp; MS<br>WORKS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <div class="marquee-inner">
+    <span class="marquee-item">MS Steel Structure</span>
+    <span class="marquee-item">Fire Fighting Systems</span>
+    <span class="marquee-item">Fabrication &amp; Erection</span>
+    <span class="marquee-item">Brick &amp; Plaster</span>
+    <span class="marquee-item">Tiles &amp; Flooring</span>
+    <span class="marquee-item">Slab Work</span>
+    <span class="marquee-item">Industrial Sheds</span>
+    <span class="marquee-item">Mezzanine Floors</span>
+    <span class="marquee-item">MS Steel Structure</span>
+    <span class="marquee-item">Fire Fighting Systems</span>
+    <span class="marquee-item">Fabrication &amp; Erection</span>
+    <span class="marquee-item">Brick &amp; Plaster</span>
+    <span class="marquee-item">Tiles &amp; Flooring</span>
+    <span class="marquee-item">Slab Work</span>
+    <span class="marquee-item">Industrial Sheds</span>
+    <span class="marquee-item">Mezzanine Floors</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="services-header fade-in">
+      <div>
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">Core Services &amp;<br>Expertise</h2>
+      </div>
+      <p class="section-desc">Comprehensive, end-to-end engineering and fabrication services across civil construction and structural steel domains.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-icon">🏗️</div>
+        <div class="service-name">MS Steel Structure Fabrication &amp; Erection</div>
+        <p class="service-desc">Design, fabrication, and erection of heavy-duty MS columns, trusses, and purlins for factories, warehouses, and industrial plants. Commercial roofing, canopies, balcony railings, and complex architectural steel structures.</p>
+        <span class="service-tag">Industrial</span>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">🏢</div>
+        <div class="service-name">Slab Structure Fabrication &amp; Erection</div>
+        <p class="service-desc">Modern composite slab construction utilizing metal decking sheets, shear stud rods, and structural steel framing. Heavy-duty structural steel supports for staircases, balconies, and elevated platforms.</p>
+        <span class="service-tag">Structural</span>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">🔧</div>
+        <div class="service-name">Shuttering &amp; Framework Services</div>
+        <p class="service-desc">Robust, high-quality steel framework and formwork systems for accurate and safe concrete slab casting during high-elevation execution. Precision formwork ensuring dimensional accuracy.</p>
+        <span class="service-tag">Framework</span>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">🔥</div>
+        <div class="service-name">Fire Fighting Systems</div>
+        <p class="service-desc">Complete fire fighting installation and pipeline work. Specialised in fire suppression systems, pipe laying, hydrant systems, and compliance-ready fire safety infrastructure for commercial and industrial buildings.</p>
+        <span class="service-tag">Safety</span>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">🧱</div>
+        <div class="service-name">Civil Works — Brick, Plaster &amp; Tiles</div>
+        <p class="service-desc">Full-spectrum civil construction including brick masonry, plastering, tile installation, and interior finishes. Delivering quality workmanship across residential, commercial, and industrial projects.</p>
+        <span class="service-tag">Civil</span>
+      </div>
+      <div class="service-card fade-in">
+        <div class="service-icon">📐</div>
+        <div class="service-name">Mezzanine Floors</div>
+        <p class="service-desc">Engineering custom, high-load capacity steel mezzanine floors for optimum space utilization in commercial and industrial properties. Designed for structural integrity and maximum usable area.</p>
+        <span class="service-tag">Design</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="projects-header fade-in">
+      <div class="section-label">Portfolio</div>
+      <h2 class="section-title">Our Work on Ground</h2>
+      <p class="section-desc" style="margin-top:0.8rem;">A selection of completed and ongoing structural steel, slab, and civil works across the NCR and beyond.</p>
+    </div>
+    <div class="gallery-grid">
+      <!-- Image 1 -->
+      <div class="gallery-item tall">
+        <img src="im10.jpeg" alt="MS Steel Frame Fabrication">
+        <div class="overlay"><span class="overlay-text">MS Steel Frame</span></div>
+      </div>
+      
+      <!-- Image 2 -->
+      <div class="gallery-item">
+        <img src="im7.jpeg" alt="Rooftop MS Platform with AC Units">
+        <div class="overlay"><span class="overlay-text">Rooftop MS Platform</span></div>
+      </div>
+      
+      <!-- Image 3 -->
+      <div class="gallery-item">
+        <img src="im11.jpeg" alt="MS Staircase Installation">
+        <div class="overlay"><span class="overlay-text">MS Staircase</span></div>
+      </div>
+      
+      <!-- Image 4 -->
+      <div class="gallery-item wide">
+        <img src="im2.jpeg" alt="Steel Beam and Staircase Structure">
+        <div class="overlay"><span class="overlay-text">Steel Beam &amp; Staircase</span></div>
+      </div>
+      
+      <!-- Image 5 -->
+      <div class="gallery-item">
+        <img src="im9.jpeg" alt="Night View Rooftop Platform">
+        <div class="overlay"><span class="overlay-text">Rooftop Platform (Night)</span></div>
+      </div>
+      
+      <!-- Image 6 -->
+      <div class="gallery-item tall">
+        <img src="im1.jpeg" alt="MS Staircase Fabrication">
+        <div class="overlay"><span class="overlay-text">MS Staircase Fabrication</span></div>
+      </div>
+      
+      <!-- Image 7 -->
+      <div class="gallery-item">
+        <img src="im3.jpeg" alt="A-Frame Steel Structure">
+        <div class="overlay"><span class="overlay-text">Heavy MS Structure</span></div>
+      </div>
+      
+      <!-- Image 8 -->
+      <div class="gallery-item">
+        <img src="im6.jpeg" alt="Rooftop AC Platform">
+        <div class="overlay"><span class="overlay-text">Rooftop AC Platform</span></div>
+      </div>
+      
+      <!-- Image 9 -->
+      <div class="gallery-item wide">
+        <img src="im15.jpeg" alt="Metal Decking Slab Work">
+        <div class="overlay"><span class="overlay-text">Metal Decking Slab</span></div>
+      </div>
+      
+      <!-- Image 10 -->
+      <div class="gallery-item">
+        <img src="im5.jpeg" alt="Interior Steel Staircase">
+        <div class="overlay"><span class="overlay-text">Interior Steel Structure</span></div>
+      </div>
+      
+      <!-- Image 11 -->
+      <div class="gallery-item">
+        <img src="im13.jpeg" alt="MS Staircase Detail">
+        <div class="overlay"><span class="overlay-text">Staircase Fabrication</span></div>
+      </div>
+      
+      <!-- Image 12 -->
+      <div class="gallery-item tall">
+        <img src="im14.jpeg" alt="Rooftop Walkway with AC">
+        <div class="overlay"><span class="overlay-text">Rooftop Walkway</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEOS SECTION -->
+<section id="videos">
+  <div class="container">
+    <div class="videos-header fade-in">
+      <div class="section-label">Site Footage</div>
+      <h2 class="section-title">Project Videos</h2>
+      <p class="section-desc" style="margin-top:0.8rem;">Watch our fabrication, erection, and civil works in action — live from our project sites.</p>
+    </div>
+
+    <div class="video-feature fade-in" id="featuredVideo">
+      <video id="mainVideo" controls preload="metadata" playsinline>
+        <source id="mainVideoSource" src="v13.mp4" type="video/mp4">
+      </video>
+      <div class="video-feature-overlay" id="featuredOverlay">
+        <div class="play-btn" id="featuredPlayBtn">
+          <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+      <div class="video-feature-label">
+        <div class="video-feature-title" id="featuredTitle">Steel Fabrication — Site Work</div>
+        <div class="video-duration">SNF Enterprises</div>
+      </div>
+    </div>
+
+    <div class="video-thumbs">
+      <div class="video-thumb active" data-index="0">
+        <video preload="metadata" muted playsinline><source src="v13.mp4" type="video/mp4"></video>
+        <div class="video-thumb-overlay"><div class="thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="thumb-label">Fabrication Work</div>
+      </div>
+      <div class="video-thumb" data-index="1">
+        <video preload="metadata" muted playsinline><source src="v9.mp4" type="video/mp4"></video>
+        <div class="video-thumb-overlay"><div class="thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="thumb-label">Steel Erection</div>
+      </div>
+      <div class="video-thumb" data-index="2">
+        <video preload="metadata" muted playsinline><source src="v10.mp4" type="video/mp4"></video>
+        <div class="video-thumb-overlay"><div class="thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="thumb-label">Civil Works</div>
+      </div>
+      <div class="video-thumb" data-index="3">
+        <video preload="metadata" muted playsinline><source src="v11.mp4" type="video/mp4"></video>
+        <div class="video-thumb-overlay"><div class="thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="thumb-label">Slab Framework</div>
+      </div>
+    </div>
+
+    <!-- 5th Video -->
+    <!-- <div style="margin-top:12px;">
+      <div class="video-thumb" data-index="4" style="aspect-ratio:16/9; width:100%;">
+        <video preload="metadata" muted playsinline><source src="v12.mp4" type="video/mp4"></video>
+        <div class="video-thumb-overlay"><div class="thumb-play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div></div>
+        <div class="thumb-label">MS Structure Site</div>
+      </div>
+    </div>
+  </div> -->
+</section>
+
+<!-- CAPABILITIES -->
+<section id="capabilities">
+  <div class="container">
+    <div class="caps-grid">
+      <div class="fade-in">
+        <div class="section-label">Technical Edge</div>
+        <h2 class="section-title">Machinery &amp; Technical Capabilities</h2>
+        <p class="section-desc">State-of-the-art tools and machinery to execute heavy structural steel projects safely and within the committed timeline.</p>
+        <ul class="caps-list">
+          <li>
+            <div class="cap-num">01</div>
+            <div>
+              <div class="cap-title">Welding Technology</div>
+              <div class="cap-desc">High-penetration Arc Welding, MIG/TIG welding machines for flawless structural joints and precision finishing.</div>
+            </div>
+          </li>
+          <li>
+            <div class="cap-num">02</div>
+            <div>
+              <div class="cap-title">Cutting &amp; Shaping</div>
+              <div class="cap-desc">Heavy-duty profile cutting machines, gas cutting sets, and precision grinding equipment for complex shapes.</div>
+            </div>
+          </li>
+          <li>
+            <div class="cap-num">03</div>
+            <div>
+              <div class="cap-title">Handling &amp; Erection</div>
+              <div class="cap-desc">Advanced material handling — chain pulleys, hoisting equipment, and strict site-safety gear (PPE kits, safety harnesses, helmets).</div>
+            </div>
+          </li>
+          <li>
+            <div class="cap-num">04</div>
+            <div>
+              <div class="cap-title">GSTIN Registered</div>
+              <div class="cap-desc">Officially registered firm with GSTIN: 10CTZPA7597N1ZT, issuing formal tax invoices for all works.</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="fade-in">
+        <div class="materials-panel">
+          <div class="section-label" style="margin-bottom:1.5rem;">Materials We Work With</div>
+          <div class="mat-item">
+            <strong>Steel Sections</strong>
+            <span>MS Channels (ISMC), MS Beams (ISMB), Angles, Flats, Hollow Sections (SHS/RHS) from Jindal Steel, JSW, Tata.</span>
+          </div>
+          <div class="mat-item">
+            <strong>Plates &amp; Sheets</strong>
+            <span>High-tensile MS Plates, Chequered Plates, and Galvanized Metal Decking Sheets.</span>
+          </div>
+          <div class="mat-item">
+            <strong>Corrosion Protection</strong>
+            <span>Zinc Chromate / Red Oxide primer followed by weather-resistant industrial protective paint.</span>
+          </div>
+          <div class="mat-item">
+            <strong>Concrete &amp; Civil</strong>
+            <span>Premium grade cement, quality bricks, and industry-standard plastering and tile materials.</span>
+          </div>
+          <div class="mat-item">
+            <strong>Fire Fighting</strong>
+            <span>GI &amp; MS pipes, fire-rated fittings, hydrant systems, and sprinkler heads.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-card-img fade-in">
+        <img src="s4.jpeg" alt="SNF Enterprises work site">
+      </div>
+      <div class="fade-in">
+        <div class="section-label">About Us</div>
+        <h2 class="section-title">SNF Enterprises</h2>
+        <p class="section-desc">A trusted and professionally managed construction and steel fabrication firm. We specialize in the design, fabrication, and erection of Mild Steel (MS) structures, industrial heavy fabrication, slab structure erection, and high-quality framework projects.</p>
+        <div class="about-highlight">
+          <p>Our core mission is to deliver exceptional engineering solutions to our clients with a steadfast commitment to safety, durability, and precision — every project, every time.</p>
+        </div>
+        <div class="about-tags">
+          <span class="tag">Fire Fighting</span>
+          <span class="tag">MS Steel Structure</span>
+          <span class="tag">Fabrication &amp; Erection</span>
+          <span class="tag">Brick &amp; Plaster</span>
+          <span class="tag">Tiles</span>
+          <span class="tag">Civil Works</span>
+          <span class="tag">Mezzanine Floors</span>
+          <span class="tag">Industrial Sheds</span>
+        </div>
+        <div style="margin-top:2.5rem;">
+          <div class="section-label" style="margin-bottom:0.5rem;">Proprietor</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:1px;">Faij Ahmad</div>
+          <div style="font-size:0.9rem;color:#777;margin-top:4px;">Vill: Chaura Raghunathpur, Sector-22, Noida (U.P.) – 201301</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div style="margin-bottom:3rem;" class="fade-in">
+      <div class="section-label">Contact Us</div>
+      <h2 class="section-title">Let's Build Together</h2>
+      <p class="section-desc">Reach out for a free site assessment or project quote. We respond within 24 hours.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="fade-in">
+        <div class="contact-info-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="contact-label">Phone / WhatsApp</div>
+            <div class="contact-value"><a href="tel:+918920857806" style="color:var(--white);text-decoration:none;">+91 8920857806</a></div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value"><a href="mailto:faijahmad093@gmail.com" style="color:var(--white);text-decoration:none;">faijahmad093@gmail.com</a></div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-label">Address</div>
+            <div class="contact-value">Vill: Chaura Raghunathpur,<br>Sector-22, Noida (U.P.) – 201301</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon">🏛️</div>
+          <div>
+            <div class="contact-label">GSTIN</div>
+            <div class="contact-value" style="font-size:0.9rem;">10CTZPA7597N1ZT</div>
+          </div>
+        </div>
+        <div style="margin-top:1rem;">
+          <a href="https://wa.me/918920857806" class="btn-primary" target="_blank">💬 WhatsApp Us</a>
+        </div>
+      </div>
+      <div class="fade-in">
+        <form class="contact-form" onsubmit="handleSubmit(event)">
+          <div class="form-row">
+            <input type="text" class="form-input" placeholder="Your Name" required>
+            <input type="tel" class="form-input" placeholder="Phone Number" required>
+          </div>
+          <input type="email" class="form-input" placeholder="Email Address">
+          <input type="text" class="form-input" placeholder="Type of Work (e.g. MS Structure, Civil, Fire Fighting)">
+          <textarea class="form-input" placeholder="Describe your project requirements..."></textarea>
+          <button type="submit" class="form-submit">Send Enquiry →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">SNF <span>Enterprises</span></div>
+      <div class="footer-tagline">Building Construction &amp; Steel Structure</div>
+    </div>
+    <div class="gstin-badge">GSTIN: 10CTZPA7597N1ZT · State: Bihar, Code: 10</div>
+    <div class="footer-copy">© 2024 SNF Enterprises. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+  /* ─── NAV ─── */
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  document.querySelectorAll('.service-card').forEach((card, i) => {
+    card.style.transitionDelay = `${i * 60}ms`;
+  });
+
+  /* ─── CONTACT FORM ─── */
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.form-submit');
+    btn.textContent = '✓ Enquiry Sent!';
+    btn.style.background = '#1a7a3a';
+    setTimeout(() => {
+      btn.textContent = 'Send Enquiry →';
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }
+
+  /* ─── VIDEO PLAYER ─── */
+  const mainVideo = document.getElementById('mainVideo');
+  const mainVideoSource = document.getElementById('mainVideoSource');
+  const featuredOverlay = document.getElementById('featuredOverlay');
+  const featuredTitle = document.getElementById('featuredTitle');
+
+  const videos = [
+    { src: 'v13.mp4', title: 'Steel Fabrication — Site Work' },
+    { src: 'v9.mp4',  title: 'Steel Structure Erection' },
+    { src: 'v10.mp4', title: 'Civil Construction Work' },
+    { src: 'v11.mp4', title: 'Slab Framework & Shuttering' },
+    { src: 'v12.mp4', title: 'MS Structure — Project Site' }
+  ];
+
+  function switchVideo(index) {
+    mainVideo.pause();
+    mainVideoSource.src = videos[index].src;
+    mainVideo.load();
+    featuredTitle.textContent = videos[index].title;
+
+    document.querySelectorAll('.video-thumb').forEach((thumb, i) => {
+      thumb.classList.toggle('active', i === index);
+    });
+
+    mainVideo.play().catch(() => {
+      console.log("Playback started after user interaction");
+    });
+  }
+
+  // Thumbnail clicks
+  document.querySelectorAll('.video-thumb').forEach((thumb, index) => {
+    thumb.addEventListener('click', () => switchVideo(index));
+  });
+
+  // Click anywhere on featured video to toggle play/pause
+  document.getElementById('featuredVideo').addEventListener('click', (e) => {
+    if (e.target.tagName === 'VIDEO') return;
+    if (mainVideo.paused) {
+      mainVideo.play();
+    } else {
+      mainVideo.pause();
+    }
+  });
+
+  // Overlay visibility
+  mainVideo.addEventListener('play', () => featuredOverlay.style.opacity = '0');
+  mainVideo.addEventListener('pause', () => featuredOverlay.style.opacity = '1');
+  mainVideo.addEventListener('ended', () => featuredOverlay.style.opacity = '1');
+</script>
+</body>
+</html>
